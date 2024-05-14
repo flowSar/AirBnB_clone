@@ -1,59 +1,45 @@
 #!/usr/bin/python3
-
+"""
+    base_model is python module where we define a BaseModel class
+"""
 import uuid
 from datetime import datetime, date
 
+
 class BaseModel:
-    
-	def __init__(self, *args, **kwargs):
-		if (len(kwargs) != 0):
-			self.id = kwargs["id"]
-			self.created_at = datetime.fromisoformat(kwargs["created_at"])
-			self.updated_at = datetime.fromisoformat(kwargs["updated_at"])
-		else:
-			self.id = uuid.uuid4()
-			self.created_at = datetime.today()
-			self.updated_at = datetime.today()
-		
+    """
+        __init__ method for initialize the object state when it created_at
+        in this case we initialize our object with id, create_at,
+        and updated_at
+    """
+    def __init__(self, *args, **kwargs):
+        if (len(kwargs) != 0):
+            self.id = kwargs["id"]
+            self.created_at = datetime.fromisoformat(kwargs["created_at"])
+            self.updated_at = datetime.fromisoformat(kwargs["updated_at"])
+        else:
+            self.id = uuid.uuid4()
+            self.created_at = datetime.today()
+            self.updated_at = datetime.today()
 
-			
+    def __str__(self):
+        """__str__ method return a respresentation of an object """
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
-	def __str__(self):
-		return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+    def save(self):
+        self.updated_at = datetime.today()
 
-	def save(self):
-		self.updated_at = datetime.today()
-    
-	def to_dict(self):
-		self.__dict__["created_at"] = self.__dict__["created_at"].isoformat(timespec='microseconds')
-		self.__dict__["updated_at"] = self.__dict__["updated_at"].isoformat(timespec='microseconds')
-		dict_class = {"__class__":self.__class__.__name__}
-		dict_class.update(self.__dict__)
-	
-		return dict_class
-    
+    def to_dict(self):
+        """ to_dict return a dictionary that represention all object
+            attribute and name
+        """
+        my_dict = self.__dict__
+        MCS = microseconds
+        date_time_obj = my_dict["created_at"].isoformat(timespec='MCS')
+        my_dict["created_at"] = date_time_obj
+        date_time_obj = my_dict["updated_at"].isoformat(timespec='MCS')
+        my_dict["updated_at"] = date_time_obj
+        dict_class = {"__class__": self.__class__.__name__}
+        dict_class.update(my_dict)
 
-if __name__ == "__main__":
-	my_model = BaseModel()
-	my_model.name = "My_First_Model"
-	my_model.my_number = 89
-	print(my_model.id)
-	print(my_model)
-	print(type(my_model.created_at))
-	print("--")
-	my_model_json = my_model.to_dict()
-	print(my_model_json)
-	print("JSON of my_model:")
-	for key in my_model_json.keys():
-		print("\t{}: ({}) - {}".format(key, type(my_model_json[key]), my_model_json[key]))
-		
-	print("--")
-	my_new_model = BaseModel(**my_model_json)
-	print(my_new_model.id)
-	print(my_new_model)
-	print(type(my_new_model.created_at))
-	
-	print("--")
-	print(my_model is my_new_model)
-    
-
+        return dict_class
