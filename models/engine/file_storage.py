@@ -64,8 +64,6 @@ class FileStorage:
 
             for key in json_data:
                 obj = BaseModel(**(json_data[key]))
-                obj2 = eval(key.split(".")[0])
-                print(f"obj2:{key.split(".")[0]} ", obj2.id)
                 self.__objects[key] = obj
         except FileNotFoundError:
             pass
