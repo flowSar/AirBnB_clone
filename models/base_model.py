@@ -4,6 +4,7 @@
 """
 import uuid
 from datetime import datetime, date
+from models import storage
 
 
 class BaseModel:
@@ -14,13 +15,22 @@ class BaseModel:
     """
     def __init__(self, *args, **kwargs):
         if (len(kwargs) != 0):
-            self.id = kwargs["id"]
-            self.created_at = datetime.fromisoformat(kwargs["created_at"])
-            self.updated_at = datetime.fromisoformat(kwargs["updated_at"])
+            for key in kwargs.keys():
+                if key == "__class__":
+                    pass
+                elif key == "created_at":
+                    DateTimeCr = datetime.fromisoformat(kwargs["created_at"])
+                    self.__dict__[key] = DateTimeCr
+                elif key == "updated_at":
+                    DateTimeUp = datetime.fromisoformat(kwargs["updated_at"])
+                    self.__dict__[key] = DateTimeUp
+                else:
+                    self.__dict__[key] = kwargs[key]
         else:
-            self.id = uuid.uuid4()
+            self.id = str(uuid.uuid4())
             self.created_at = datetime.today()
             self.updated_at = datetime.today()
+            storage.new(self)
 
     def __str__(self):
         """__str__ method return a respresentation of an object """
@@ -28,18 +38,18 @@ class BaseModel:
 
     def save(self):
         self.updated_at = datetime.today()
+        storage.save()
 
     def to_dict(self):
         """ to_dict return a dictionary that represention all object
             attribute and name
         """
         my_dict = self.__dict__
-        MCS = microseconds
-        date_time_obj = my_dict["created_at"].isoformat(timespec='MCS')
-        my_dict["created_at"] = date_time_obj
-        date_time_obj = my_dict["updated_at"].isoformat(timespec='MCS')
-        my_dict["updated_at"] = date_time_obj
+        MCS = "microseconds"
+        date_time_obj1 = my_dict["created_at"].isoformat(timespec=MCS)
+        my_dict["created_at"] = date_time_obj1
+        date_time_obj2 = my_dict["updated_at"].isoformat(timespec=MCS)
+        my_dict["updated_at"] = date_time_obj2
         dict_class = {"__class__": self.__class__.__name__}
         dict_class.update(my_dict)
-
         return dict_class
