@@ -16,13 +16,13 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         if (len(kwargs) != 0):
             for key in kwargs.keys():
-                if key == "__class__":
+                if key == '__class__':
                     pass
-                elif key == "created_at":
-                    DateTimeCr = datetime.fromisoformat(kwargs["created_at"])
+                elif key == 'created_at':
+                    DateTimeCr = datetime.fromisoformat(kwargs['created_at'])
                     self.__dict__[key] = DateTimeCr
-                elif key == "updated_at":
-                    DateTimeUp = datetime.fromisoformat(kwargs["updated_at"])
+                elif key == 'updated_at':
+                    DateTimeUp = datetime.fromisoformat(kwargs['updated_at'])
                     self.__dict__[key] = DateTimeUp
                 else:
                     self.__dict__[key] = kwargs[key]
@@ -45,11 +45,11 @@ class BaseModel:
             attribute and name
         """
         my_dict = self.__dict__.copy()
-        MCS = "microseconds"
-        date_time_obj1 = my_dict["created_at"].isoformat(timespec=MCS)
-        my_dict["created_at"] = date_time_obj1
+        MCS = 'microseconds'
+        date_time_obj1 = my_dict['created_at'].isoformat(timespec=MCS)
+        my_dict['created_at'] = date_time_obj1
         date_time_obj2 = my_dict["updated_at"].isoformat(timespec=MCS)
-        my_dict["updated_at"] = date_time_obj2
-        dict_class = {"__class__": self.__class__.__name__}
+        my_dict['updated_at'] = date_time_obj2
+        dict_class = {'__class__': self.__class__.__name__}
         dict_class.update(my_dict)
         return dict_class
