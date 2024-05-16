@@ -47,10 +47,10 @@ class FileStorage:
         for key in self.__objects.keys():
             obj = self.__objects[key]
             json_data[f"{obj.__class__.__name__}.{obj.id}"] = obj.to_dict()
-
+ 
         with open(self.__file_path, "w") as f:
             json.dump(json_data, f)
-
+        self.__objects = {}
     def reload(self):
         """
             reload: this methode is for loading data from json file to
@@ -66,4 +66,4 @@ class FileStorage:
                 obj = BaseModel(**(json_data[key]))
                 self.__objects[key] = obj
         except FileNotFoundError:
-            pass
+            pass 

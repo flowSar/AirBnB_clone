@@ -44,7 +44,7 @@ class BaseModel:
         """ to_dict return a dictionary that represention all object
             attribute and name
         """
-        my_dict = self.__dict__
+        my_dict = self.__dict__.copy()
         MCS = "microseconds"
         date_time_obj1 = my_dict["created_at"].isoformat(timespec=MCS)
         my_dict["created_at"] = date_time_obj1
