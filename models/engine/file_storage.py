@@ -64,7 +64,8 @@ class FileStorage:
             for key in json_data:
                 obj_name = key.split(".")[0]
                 new_object = self.get_right_object(obj_name, json_data[key])
-                self.__objects[key] = new_object
+                if new_object != None:
+                    self.__objects[key] = new_object
         except FileNotFoundError:
             pass
 
@@ -93,4 +94,3 @@ class FileStorage:
             if (obj_name == key):
                 new_object = object_list[key](**dic)
                 return new_object
-        return null

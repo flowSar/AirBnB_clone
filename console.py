@@ -109,7 +109,7 @@ class HBNBCommand(cmd.Cmd):
                 obj_id = obj.split(".")[1]
                 if obj_id == argument[1]:
                     found = True
-                    new_obj = BaseModel(**json_data[obj])
+                    new_obj = self.class_list[argument[0]](**json_data[obj])
                     print(new_obj)
 
             if not found:
@@ -149,17 +149,26 @@ class HBNBCommand(cmd.Cmd):
         """
         argument = arg.split(" ")
         data = []
-        if (len(argument[0]) == 0):
-            print("** class name missing **")
-        elif (not self.is_class_exist(argument[0])):
-            print("** class doesn't exist **")
+        
+        if (len(argument[0]) > 0):
+            if (not self.is_class_exist(argument[0])):
+                print("** class doesn't exist **")
+            else:
+                with open(self.__file_path, "r") as f:
+                    json_data = json.load(f)
+                for key in json_data:
+                    class_name = key.split(".")[0]
+                    if class_name == argument[0]:
+                        new_obj = self.class_list[class_name](**json_data[key])
+                        data.append(new_obj.__str__())
+                print(data)
         else:
             with open(self.__file_path, "r") as f:
                 json_data = json.load(f)
             for key in json_data:
-                new_obj = BaseModel(**json_data[key])
+                class_name = key.split(".")[0]
+                new_obj = self.class_list[class_name](**json_data[key])
                 data.append(new_obj.__str__())
-
             print(data)
 
     def do_update(self, arg):
