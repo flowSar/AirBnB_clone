@@ -204,7 +204,44 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
             with open(self.__file_path, "w") as f:
                 json.dump(json_data, f)
- 
+    
+    #def do_User(self, arg):
+        #"""this method for reteiving all User object data from json file"""
+        #argument = arg.split(" ")
+        #data = []
+        #found = False
+        #count = 0
+        #object_id = get_id(argument[0])
+        #try :
+            #with open(self.__file_path, "r") as f:
+                #json_data = json.load(f)
+        #except FileNotFoundError:
+            #pass
+        #else:
+            #for key in json_data:
+                #class_name = key.split(".")[0]
+                #if class_name == "User":
+                    #count += 1
+                    #if object_id is not None:
+                        #if object_id == key.split(".")[1]:
+                            #new_obj = self.class_list[class_name](**json_data[key])
+                            #data.append(new_obj.__str__())
+                            #found = True
+                    #else:
+                        #new_obj = self.class_list[class_name](**json_data[key])
+                        #data.append(new_obj.__str__())
+                        #found = True
+        #if (not found or argument[0] == ".show()" or argument[0] == ".destroy()"):
+            #print("** no instance found **")
+        #elif argument[0] == ".all()" and found == True:
+            #print(data)
+        #elif argument[0] == ".count()" and found == True:
+            #print(count)
+        #elif found and object_id is not None:
+            #self.do_destroy(f"User {object_id}")
+        #else:
+            #print(data)
+
     def do_User(self, arg):
         """this method for reteiving all User object data from json file"""
         argument = arg.split(" ")
@@ -235,164 +272,116 @@ class HBNBCommand(cmd.Cmd):
     def do_BaseModel(self, arg):
         """this method for reteiving all BaseModel object data from json file"""
         argument = arg.split(" ")
-        fun_name = argument[0]
-        f = False
-        for fun in self.function_list:
-            if re.match(fun, argument[0]):
-                f = True
-            if len(fun) == len(argument[0]) and fun != ".all()":
-                f = False
+        data = []
+        count = 0
 
-        if f == False:
-            print("** no instance found **f")
-            return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "BaseModel")
-        if not found:
-            print("** no instance found **")
-        elif found and fun_name == ".all()":
+        with open(self.__file_path, "r") as f:
+            json_data = json.load(f)
+        for key in json_data:
+            class_name = key.split(".")[0]
+            if class_name == "BaseModel":
+                count += 1
+                new_obj = self.class_list[class_name](**json_data[key])
+                data.append(new_obj.__str__())
+        if argument[0] == ".all()":
             print(data)
-        elif found and fun_name == ".count()":
+        elif argument[0] == ".count()":
             print(count)
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"BaseModel {object_id}")
-        else:
-            print(data)
-
 
     def do_State(self, arg):
         """this method for reteiving all State object data from json file"""
         argument = arg.split(" ")
-        fun_name = argument[0]
-        f = False
-        for fun in self.function_list:
-            if re.match(fun, argument[0]):
-                f = True
-            if len(fun) == len(argument[0]) and fun != ".all()":
-                f = False
+        data = []
+        count = 0
 
-        if f == False:
-            print("** no instance found **f")
-            return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "State")
-        if not found:
-            print("** no instance found **")
-        elif found and fun_name == ".all()":
+        with open(self.__file_path, "r") as f:
+            json_data = json.load(f)
+        for key in json_data:
+            class_name = key.split(".")[0]
+            if class_name == "State":
+                count += 1
+                new_obj = self.class_list[class_name](**json_data[key])
+                data.append(new_obj.__str__())
+        if argument[0] == ".all()":
             print(data)
-        elif found and fun_name == ".count()":
+        elif argument[0] == ".count()":
             print(count)
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"State {object_id}")
-        else:
-            print(data)
-
 
     def do_Place(self, arg):
         """this method for reteiving all Place object data from json file"""
         argument = arg.split(" ")
-        fun_name = argument[0]
-        f = False
-        for fun in self.function_list:
-            if re.match(fun, argument[0]):
-                f = True
-            if len(fun) == len(argument[0]) and fun != ".all()":
-                f = False
+        data = []
+        count = 0
 
-        if f == False:
-            print("** no instance found **f")
-            return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "Place")
-        if not found:
-            print("** no instance found **")
-        elif found and fun_name == ".all()":
+        with open(self.__file_path, "r") as f:
+            json_data = json.load(f)
+        for key in json_data:
+            class_name = key.split(".")[0]
+            if class_name == "Place":
+                count += 1
+                new_obj = self.class_list[class_name](**json_data[key])
+                data.append(new_obj.__str__())
+        if argument[0] == ".all()":
             print(data)
-        elif found and fun_name == ".count()":
+        elif argument[0] == ".count()":
             print(count)
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"Place {object_id}")
-        else:
-            print(data)
-
             
     def do_City(self, arg):
         """this method for reteiving all City object data from json file"""
         argument = arg.split(" ")
-        fun_name = argument[0]
-        f = False
-        for fun in self.function_list:
-            if re.match(fun, argument[0]):
-                f = True
-            if len(fun) == len(argument[0]) and fun != ".all()":
-                f = False
+        data = []
+        count = 0
 
-        if f == False:
-            print("** no instance found **f")
-            return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "City")
-        if not found:
-            print("** no instance found **")
-        elif found and fun_name == ".all()":
+        with open(self.__file_path, "r") as f:
+            json_data = json.load(f)
+        for key in json_data:
+            class_name = key.split(".")[0]
+            if class_name == "City":
+                count += 1
+                new_obj = self.class_list[class_name](**json_data[key])
+                data.append(new_obj.__str__())
+        if argument[0] == ".all()":
             print(data)
-        elif found and fun_name == ".count()":
+        elif argument[0] == ".count()":
             print(count)
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"City {object_id}")
-        else:
-            print(data)
-
             
     def do_Review(self, arg):
         """this method for reteiving all Review object data from json file"""
         argument = arg.split(" ")
-        fun_name = argument[0]
-        f = False
-        for fun in self.function_list:
-            if re.match(fun, argument[0]):
-                f = True
-            if len(fun) == len(argument[0]) and fun != ".all()":
-                f = False
+        data = []
+        count = 0
 
-        if f == False:
-            print("** no instance found **f")
-            return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "Review")
-        if not found:
-            print("** no instance found **")
-        elif found and fun_name == ".all()":
+        with open(self.__file_path, "r") as f:
+            json_data = json.load(f)
+        for key in json_data:
+            class_name = key.split(".")[0]
+            if class_name == "Review":
+                count += 1
+                new_obj = self.class_list[class_name](**json_data[key])
+                data.append(new_obj.__str__())
+        if argument[0] == ".all()":
             print(data)
-        elif found and fun_name == ".count()":
+        elif argument[0] == ".count()":
             print(count)
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"Review {object_id}")
-        else:
-            print(data)
-
         
     def do_Amenity(self, arg):
         """this method for reteiving all Amenity object data from json file"""
         argument = arg.split(" ")
-        fun_name = argument[0]
-        f = False
-        for fun in self.function_list:
-            if re.match(fun, argument[0]):
-                f = True
-            if len(fun) == len(argument[0]) and fun != ".all()":
-                f = False
+        data = []
+        count = 0
 
-        if f == False:
-            print("** no instance found **f")
-            return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "Amenity")
-        if not found:
-            print("** no instance found **")
-        elif found and fun_name == ".all()":
+        with open(self.__file_path, "r") as f:
+            json_data = json.load(f)
+        for key in json_data:
+            class_name = key.split(".")[0]
+            if class_name == "Amenity":
+                count += 1
+                new_obj = self.class_list[class_name](**json_data[key])
+                data.append(new_obj.__str__())
+        if argument[0] == ".all()":
             print(data)
-        elif found and fun_name == ".count()":
+        elif argument[0] == ".count()":
             print(count)
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"Amenity {object_id}")
-        else:
-            print(data)
-
         
     def get_id(self, argument):
         arg = argument

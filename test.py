@@ -1,33 +1,67 @@
 #!/usr/bin/python3
 
-import cmd
-import uuid
-from datetime import datetime
+import re
 
-class MyApp(cmd.Cmd):
-    prompt ='myapp>' # Set the prompt
-
-    def do_greet(self, arg):
-        """Greet the user"""
-        print(f"Hello, {arg}!")
-    def do_action(self, arg):
-        print("")
+#def do_User(self, arg):
+        #"""this method for reteiving all User object data from json file"""
     
-    def do_id(self, arg):
-        """generate Id for user"""
-        print(f"this is your id : {uuid.uuid1()}")
-    def do_date(self, arg):
-        print(f"date: {datetime.now().isoformat(timespec='microseconds')}")
+    #found, object_id, data, fun_name, count = get_user_info_state(arg, "User")
+    
+    
+    #if not found or fun_name == ".show()" or fun_name == ".destroy()":
+        #print("** no instance found **")
+    #elif found and fun_name == ".all()":
+        #print(data)
+    #elif found and fun_name == ".count()":
+        #print(count)
+    #elif found and object_id is not None:
+        #self.do_destroy(f"User {object_id}")
+    #else:
+        #print(data)
 
-    def do_quit(self, arg):
-        """Quit the application"""
-        print("Goodbye!")
-        return True  # Exit the application
-    def do_EOF(self, arg):
-        print("")
-        return True
+#def get_user_info_state(self, arg, class_name):
+      
+    #argument = arg.split(" ")
+    #fun_name = argument[0]
+    #object_id = get_id(fun_name)
+    #data = []
+    #found = False
+    #count = 0
+      
+    #try :
+        #with open(self.__file_path, "r") as f:
+            #json_data = json.load(f)
+    #except FileNotFoundError:
+        #pass
+    #else:
+        #for key in json_data:
+            #object_name_f = key.split(".")[0]
+            #object_id_f = key.split(".")[1]
+            #if object_name_f == class_name:
+                #count += 1
+                #if object_id_f == object_id:
+                    #new_obj = self.class_list[object_name_f](**json_data[key])
+                    #data.append(new_obj.__str__())
+                    #return (True , object_id, data, fun_name, count)
+            #else:
+                    #new_obj = self.class_list[class_name](**json_data[key])
+                    #data.append(new_obj.__str__())
+                    #found = True
+            
+        #return (found, None, data, fun_name, count)
 
 
-if __name__ == '__main__':
-    app = MyApp()
-    app.cmdloop()  
+
+# 77211966-b927-4265-aa71-38d31101fd37
+
+fun = ".show()"
+fun2 = ".show(77211966-b927-4265-aa71-38d31101fd37)"
+
+if re.match(".show()", fun2):
+    print("match")
+else:
+    print("doesn't match")
+
+
+
+
