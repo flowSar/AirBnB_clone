@@ -4,7 +4,14 @@
 """
 
 import cmd
+from models import storage
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.review import Review
+from models.place import Place
+from models.city import City
+from models.amenity import Amenity
 import json
 
 msg = """
@@ -18,7 +25,15 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = '(hbnb) '
     __file_path = "file.json"
-    class_list = ["BaseModel"]
+    class_list = {
+        "BaseModel": BaseModel,
+        "User": User,
+        "State": State,
+        "City": City,
+        "Amenity": Amenity,
+        "Place": Place,
+        "Review": Review
+        }
 
     def is_class_exist(self, class_name):
         """this method for checking if class exist in out list
@@ -69,9 +84,10 @@ class HBNBCommand(cmd.Cmd):
         elif (not self.is_class_exist(argument[0])):
             print("** class doesn't exist **")
         else:
-            baseModel = BaseModel()
-            baseModel.save()
-            print(baseModel.id)
+            new_object = self.class_list[argument[0]]()
+            storage.reload()
+            new_object.save()
+            print(new_object.id)
 
     def do_show(self, arg):
         """show BaseModel for giving id if it's exist in json file
@@ -170,7 +186,7 @@ class HBNBCommand(cmd.Cmd):
                 obj_id = obj.split(".")[1]
                 if obj_id == argument[1]:
                     found = True
-                    new_object = BaseModel(json_data[obj])
+                    new_object = self.class_list[argument[0]](json_data[obj])
 
                     if ("." in argument[3]):
                         json_data[obj][argument[2]] = float(argument[3])

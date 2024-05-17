@@ -47,23 +47,50 @@ class FileStorage:
         for key in self.__objects.keys():
             obj = self.__objects[key]
             json_data[f"{obj.__class__.__name__}.{obj.id}"] = obj.to_dict()
- 
+
         with open(self.__file_path, "w") as f:
             json.dump(json_data, f)
         self.__objects = {}
+
     def reload(self):
         """
             reload: this methode is for loading data from json file to
             generate new objects from each object in jsonfile
         """
-
-        from models.base_model import BaseModel
         try:
             with open(self.__file_path, "r") as f:
                 json_data = json.load(f)
 
             for key in json_data:
-                obj = BaseModel(**(json_data[key]))
-                self.__objects[key] = obj
+                obj_name = key.split(".")[0]
+                new_object = self.get_right_object(obj_name, json_data[key])
+                self.__objects[key] = new_object
         except FileNotFoundError:
-            pass 
+            pass
+
+    def get_right_object(self, obj_name, dic):
+        """this method for getting the creating the right new object
+            and it's attributes based on the giving name and data
+            Return:
+                new object or null if the name doesn't exist
+        """
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.state import State
+        from models.review import Review
+        from models.place import Place
+        from models.city import City
+        from models.amenity import Amenity
+
+        object_list = {"BaseModel": BaseModel,
+                       "User": User,
+                       "State": State,
+                       "Review": Review,
+                       "Place": Place,
+                       "City": City
+                       }
+        for key in object_list:
+            if (obj_name == key):
+                new_object = object_list[key](**dic)
+                return new_object
+        return null
