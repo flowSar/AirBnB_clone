@@ -218,7 +218,7 @@ class HBNBCommand(cmd.Cmd):
                 f = False
 
         if f == False:
-            print("** no instance found **f")
+            print("** no instance found **")
             return
         found, object_id, data, fun_name, count = self.get_object_info_state(arg, "User")
         if fun_name == ".count()":
@@ -226,7 +226,7 @@ class HBNBCommand(cmd.Cmd):
         elif found and fun_name == ".all()":
             print(data)
         elif not found:
-            print("** no instance found **")
+            print(data)
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"User {object_id}")
         else:
