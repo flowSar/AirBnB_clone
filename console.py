@@ -100,10 +100,11 @@ class HBNBCommand(cmd.Cmd):
                 arg: argument that was passed with show command
         """
         argument = arg.split(" ")
+        giving_obj = argument[0]
         found = False
-        if (len(argument[0]) == 0):
+        if (len(giving_obj) == 0):
             print("** class name missing **")
-        elif (not self.is_class_exist(argument[0])):
+        elif (not self.is_class_exist(giving_obj)):
             print("** class doesn't exist **")
         elif (len(argument) < 2):
             print("** instance id missing **")
@@ -112,10 +113,12 @@ class HBNBCommand(cmd.Cmd):
                 json_data = json.load(f)
             for obj in json_data:
                 obj_id = obj.split(".")[1]
-                if obj_id == argument[1]:
-                    found = True
-                    new_obj = self.class_list[argument[0]](**json_data[obj])
-                    print(new_obj)
+                obj_name = obj.split(".")[0]
+                if obj_name == giving_obj:
+                    if obj_id == argument[1]:
+                        found = True
+                        new_obj = self.class_list[giving_obj](**json_data[obj])
+                        print(new_obj)
 
             if not found:
                 print("** no instance found **")
