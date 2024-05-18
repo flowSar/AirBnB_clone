@@ -245,7 +245,7 @@ class HBNBCommand(cmd.Cmd):
                 f = False
 
         if f == False:
-            print("** no instance found **f")
+            print("** no instance found **")
             return
         found, object_id, data, fun_name, count = self.get_object_info_state(arg, "BaseModel")
         if found and fun_name == ".all()":
@@ -253,7 +253,7 @@ class HBNBCommand(cmd.Cmd):
         elif fun_name == ".count()":
             print(count)
         elif not found:
-            print("** no instance found **")
+            print(data)
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"BaseModel {object_id}")
         else:
@@ -272,7 +272,7 @@ class HBNBCommand(cmd.Cmd):
                 f = False
 
         if f == False:
-            print("** no instance found **f")
+            print("** no instance found **")
             return
         found, object_id, data, fun_name, count = self.get_object_info_state(arg, "State")
         if found and fun_name == ".all()":
@@ -280,7 +280,7 @@ class HBNBCommand(cmd.Cmd):
         elif fun_name == ".count()":
             print(count)
         elif not found:
-            print("** no instance found **")
+            print(data)
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"State {object_id}")
         else:
@@ -299,7 +299,7 @@ class HBNBCommand(cmd.Cmd):
                 f = False
 
         if f == False:
-            print("** no instance found **f")
+            print("** no instance found **")
             return
         found, object_id, data, fun_name, count = self.get_object_info_state(arg, "Place")
         if found and fun_name == ".all()":
@@ -307,7 +307,7 @@ class HBNBCommand(cmd.Cmd):
         elif fun_name == ".count()":
             print(count)
         elif not found:
-            print("** no instance found **")
+            print(data)
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"Place {object_id}")
         else:
@@ -326,7 +326,7 @@ class HBNBCommand(cmd.Cmd):
                 f = False
 
         if f == False:
-            print("** no instance found **f")
+            print("** no instance found **")
             return
         found, object_id, data, fun_name, count = self.get_object_info_state(arg, "City")
         if found and fun_name == ".all()":
@@ -334,7 +334,7 @@ class HBNBCommand(cmd.Cmd):
         elif fun_name == ".count()":
             print(count)
         elif not found:
-            print("** no instance found **")
+            print(data)
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"City {object_id}")
         else:
@@ -353,7 +353,7 @@ class HBNBCommand(cmd.Cmd):
                 f = False
 
         if f == False:
-            print("** no instance found **f")
+            print("** no instance found **")
             return
         found, object_id, data, fun_name, count = self.get_object_info_state(arg, "Review")
         if found and fun_name == ".all()":
@@ -361,7 +361,7 @@ class HBNBCommand(cmd.Cmd):
         elif fun_name == ".count()":
             print(count)
         elif not found:
-            print("** no instance found **")
+            print(data)
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"Review {object_id}")
         else:
@@ -380,7 +380,7 @@ class HBNBCommand(cmd.Cmd):
                 f = False
 
         if f == False:
-            print("** no instance found **f")
+            print("** no instance found **")
             return
         found, object_id, data, fun_name, count = self.get_object_info_state(arg, "Amenity")
 
@@ -389,7 +389,7 @@ class HBNBCommand(cmd.Cmd):
         elif fun_name == ".count()":
             print(count)
         elif not found:
-            print("** no instance found **")
+            print(data)
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"Amenity {object_id}")
         else:
