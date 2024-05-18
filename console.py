@@ -37,7 +37,8 @@ class HBNBCommand(cmd.Cmd):
         }
     function_list = [".all()",
                     ".destroy()",
-                    ".show()"]
+                    ".show()",
+                    ".count()"]
 
     def is_class_exist(self, class_name):
         """this method for checking if class exist in out list
@@ -213,19 +214,19 @@ class HBNBCommand(cmd.Cmd):
         for fun in self.function_list:
             if re.match(fun, argument[0]):
                 f = True
-            if len(fun) == len(argument[0]) and fun != ".all()":
+            if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
                 f = False
 
         if f == False:
             print("** no instance found **f")
             return
         found, object_id, data, fun_name, count = self.get_object_info_state(arg, "User")
-        if not found:
-            print("** no instance found **")
+        if fun_name == ".count()":
+            print(count)
         elif found and fun_name == ".all()":
             print(data)
-        elif found and fun_name == ".count()":
-            print(count)
+        elif not found:
+            print("** no instance found **")
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"User {object_id}")
         else:
