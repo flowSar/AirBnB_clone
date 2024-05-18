@@ -156,19 +156,26 @@ class HBNBCommand(cmd.Cmd):
                 arg: argument that was passed with all command
         """
         argument = arg.split(" ")
+        giving_obj = argument[0]
         data = []
         
         if (len(argument[0]) > 0):
             if (not self.is_class_exist(argument[0])):
                 print("** class doesn't exist **")
-        else:
-            with open(self.__file_path, "r") as f:
-                json_data = json.load(f)
-            for key in json_data:
-                class_name = key.split(".")[0]
-                new_obj = self.class_list[class_name](**json_data[key])
+                return
+
+        with open(self.__file_path, "r") as f:
+            json_data = json.load(f)
+        for key in json_data:
+            obj = key.split(".")[0]
+            if len(giving_obj) > 0 :
+                if giving_obj == obj:
+                    new_obj = self.class_list[obj](**json_data[key])
+                    data.append(new_obj.__str__())
+            else:
+                new_obj = self.class_list[obj](**json_data[key])
                 data.append(new_obj.__str__())
-            print(data)
+        print(data)
 
     def do_update(self, arg):
         """this method for updating BaseModel instance attributes
