@@ -54,14 +54,13 @@ import re
 
 # 77211966-b927-4265-aa71-38d31101fd37
 
-fun = ".show()"
-fun2 = ".show(77211966-b927-4265-aa71-38d31101fd37)"
+number
+= "3.5666"
 
-if re.match(".show()", fun2):
+if re.match(r"^(\d+(\.\d+)?)$", number):
     print("match")
 else:
-    print("doesn't match")
-
+    print("dosn'tmatch")
 
 
 

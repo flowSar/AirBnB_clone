@@ -36,9 +36,9 @@ class HBNBCommand(cmd.Cmd):
         "Review": Review
         }
     function_list = [".all()",
-                    ".destroy()",
-                    ".show()",
-                    ".count()"]
+                     ".destroy()",
+                     ".show()",
+                     ".count()"]
 
     def is_class_exist(self, class_name):
         """this method for checking if class exist in out list
@@ -101,6 +101,7 @@ class HBNBCommand(cmd.Cmd):
         """
         argument = arg.split(" ")
         giving_obj = argument[0]
+        giving_id = argument[1]
         found = False
         if (len(giving_obj) == 0):
             print("** class name missing **")
@@ -115,7 +116,7 @@ class HBNBCommand(cmd.Cmd):
                 obj_id = obj.split(".")[1]
                 obj_name = obj.split(".")[0]
                 if obj_name == giving_obj:
-                    if obj_id == argument[1]:
+                    if obj_id == giving_id:
                         found = True
                         new_obj = self.class_list[giving_obj](**json_data[obj])
                         print(new_obj)
@@ -129,6 +130,8 @@ class HBNBCommand(cmd.Cmd):
                 arg: argument that was passed with destroy command
         """
         argument = arg.split(" ")
+        giving_obj = argument[0]
+        giving_id = argument[1]
         found = False
         if (len(argument[0]) == 0):
             print("** class name missing **")
@@ -139,16 +142,19 @@ class HBNBCommand(cmd.Cmd):
         else:
             with open(self.__file_path, "r") as f:
                 json_data = json.load(f)
-            for obj in json_data:
-                obj_id = obj.split(".")[1]
-                if obj_id == argument[1]:
-                    found = True
-                    json_data.pop(obj)
-                    break
+            for key in json_data:
+                obj_id = key.split(".")[1]
+                obj_name = key.split(".")[0]
+                if obj_name == giving_obj:
+                    if obj_id == giving_id:
+                        found = True
+                        json_data.pop(key)
+                        break
             with open(self.__file_path, "w") as f:
                 json.dump(json_data, f)
             if not found:
                 print("** no instance found **")
+            json_data = {}  # insure that nothing left
 
     def do_all(self, arg):
         """print a list of all instance that exist in json file
@@ -158,7 +164,7 @@ class HBNBCommand(cmd.Cmd):
         argument = arg.split(" ")
         giving_obj = argument[0]
         data = []
-        
+
         if (len(argument[0]) > 0):
             if (not self.is_class_exist(argument[0])):
                 print("** class doesn't exist **")
@@ -168,7 +174,7 @@ class HBNBCommand(cmd.Cmd):
             json_data = json.load(f)
         for key in json_data:
             obj = key.split(".")[0]
-            if len(giving_obj) > 0 :
+            if len(giving_obj) > 0:
                 if giving_obj == obj:
                     new_obj = self.class_list[obj](**json_data[key])
                     data.append(new_obj.__str__())
@@ -183,6 +189,10 @@ class HBNBCommand(cmd.Cmd):
                 arg: argument that was passed with update command
         """
         argument = arg.split(" ")
+        giving_obj = argument[0]
+        giving_id = argument[1]
+        attribute = argument[2]
+        value = argument[3]
         found = False
         if (len(argument[0]) == 0):
             print("** class name missing **")
@@ -197,27 +207,29 @@ class HBNBCommand(cmd.Cmd):
         else:
             with open(self.__file_path, "r") as f:
                 json_data = json.load(f)
-            for obj in json_data:
-                obj_id = obj.split(".")[1]
-                if obj_id == argument[1]:
-                    found = True
-                    new_object = self.class_list[argument[0]](json_data[obj])
-
-                    if ("." in argument[3]):
-                        json_data[obj][argument[2]] = float(argument[3])
-                    elif (argument[3][0] == "\""):
-                        json_data[obj][argument[2]] = argument[3][1:-1]
-                    else:
-                        json_data[obj][argument[2]] = int(argument[3])
-                    break
+            for key in json_data:
+                obj_id = key.split(".")[1]
+                obj_name = key.split(".")[0]
+                if giving_obj == obj_name:
+                    if obj_id == giving_id:
+                        found = True
+                        if (re.match(r"^(\d+(\.\d+)?)$", value)):
+                            json_data[key][attribute] = float(value)
+                        elif (value[0] == "\""):
+                            json_data[key][attribute] = value[1:-1]
+                        else:
+                            json_data[key][attribute] = int(value)
+                        break
 
             if not found:
                 print("** no instance found **")
             with open(self.__file_path, "w") as f:
                 json.dump(json_data, f)
- 
+
     def do_User(self, arg):
-        """this method for reteiving all User object data from json file"""
+        """this method for reteiving all User
+           object data from json file
+        """
         argument = arg.split(" ")
         fun_name = argument[0]
         f = False
@@ -227,10 +239,10 @@ class HBNBCommand(cmd.Cmd):
             if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
                 f = False
 
-        if f == False:
+        if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "User")
+        found, object_id, data, fun_name, count = self.get_obj_info(arg, "User")
         if fun_name == ".count()":
             print(count)
         elif found and fun_name == ".all()":
@@ -242,9 +254,9 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(data)
 
-   
     def do_BaseModel(self, arg):
-        """this method for reteiving all BaseModel object data from json file"""
+        """this method for reteiving all BaseModel
+           object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
         f = False
@@ -254,10 +266,10 @@ class HBNBCommand(cmd.Cmd):
             if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
                 f = False
 
-        if f == False:
+        if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "BaseModel")
+        found, object_id, data, fun_name, count = self.get_obj_info(arg, "BaseModel")
         if found and fun_name == ".all()":
             print(data)
         elif fun_name == ".count()":
@@ -269,9 +281,9 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(data)
 
-
     def do_State(self, arg):
-        """this method for reteiving all State object data from json file"""
+        """this method for reteiving all State
+        object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
         f = False
@@ -281,10 +293,10 @@ class HBNBCommand(cmd.Cmd):
             if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
                 f = False
 
-        if f == False:
+        if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "State")
+        found, object_id, data, fun_name, count = self.get_obj_info(arg, "State")
         if found and fun_name == ".all()":
             print(data)
         elif fun_name == ".count()":
@@ -296,9 +308,9 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(data)
 
-
     def do_Place(self, arg):
-        """this method for reteiving all Place object data from json file"""
+        """this method for reteiving all
+        Place object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
         f = False
@@ -308,10 +320,10 @@ class HBNBCommand(cmd.Cmd):
             if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
                 f = False
 
-        if f == False:
+        if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "Place")
+        found, object_id, data, fun_name, count = self.get_obj_info(arg, "Place")
         if found and fun_name == ".all()":
             print(data)
         elif fun_name == ".count()":
@@ -323,9 +335,9 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(data)
 
-            
     def do_City(self, arg):
-        """this method for reteiving all City object data from json file"""
+        """this method for reteiving all
+        City object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
         f = False
@@ -335,10 +347,10 @@ class HBNBCommand(cmd.Cmd):
             if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
                 f = False
 
-        if f == False:
+        if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "City")
+        found, object_id, data, fun_name, count = self.get_obj_info(arg, "City")
         if found and fun_name == ".all()":
             print(data)
         elif fun_name == ".count()":
@@ -350,9 +362,9 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(data)
 
-            
     def do_Review(self, arg):
-        """this method for reteiving all Review object data from json file"""
+        """this method for reteiving all
+        Review object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
         f = False
@@ -362,10 +374,10 @@ class HBNBCommand(cmd.Cmd):
             if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
                 f = False
 
-        if f == False:
+        if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "Review")
+        found, object_id, data, fun_name, count = self.get_obj_info(arg, "Review")
         if found and fun_name == ".all()":
             print(data)
         elif fun_name == ".count()":
@@ -377,22 +389,22 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(data)
 
-        
     def do_Amenity(self, arg):
-        """this method for reteiving all Amenity object data from json file"""
+        """this method for reteiving all Amenity
+        object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
         f = False
         for fun in self.function_list:
-            if re.match(fun, argument[0]):
+            if re.match(fun, fun_name):
                 f = True
-            if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
+            if len(fun) == len(fun_name) and fun != ".all()" and fun != ".count()":
                 f = False
 
-        if f == False:
+        if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_object_info_state(arg, "Amenity")
+        found, obj_id, data, fun_name, count = self.get_obj_info(arg, "Amenity")
 
         if found and fun_name == ".all()":
             print(data)
@@ -400,12 +412,11 @@ class HBNBCommand(cmd.Cmd):
             print(count)
         elif not found:
             print("** no instance found **")
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"Amenity {object_id}")
+        elif found and obj_id is not None and re.match(".destroy", fun_name):
+            self.do_destroy(f"Amenity {obj_id}")
         else:
             print(data)
 
-        
     def get_id(self, argument):
         arg = argument
         object_id = None
@@ -417,36 +428,37 @@ class HBNBCommand(cmd.Cmd):
                 object_id = arg[9:-1]
         return object_id
 
-    def get_object_info_state(self, arg, class_name):
-            argument = arg.split(" ")
-            fun_name = argument[0]
-            object_id = self.get_id(argument[0])
-            data = []
-            found = False
-            count = 0
-            
-            if len(arg) <= 1:
-                return (False, None, [], None, 0)
-            try :
-                with open(self.__file_path, "r") as f:
-                    json_data = json.load(f)
-            except FileNotFoundError:
-                pass
-            else:
-                for key in json_data:
-                    object_name_f = key.split(".")[0]
-                    object_id_f = key.split(".")[1]
-                    if object_name_f == class_name:
-                        count += 1
-                        if object_id_f == object_id:
-                            new_obj = self.class_list[object_name_f](**json_data[key])
-                            data.append(new_obj.__str__())
-                            return (True , object_id, data, fun_name, count)
-                        else:
-                            new_obj = self.class_list[class_name](**json_data[key])
-                            data.append(new_obj.__str__())
-                            found = True
-                return (found, None, data, fun_name, count)
+    def get_obj_info(self, arg, cls_name):
+        argument = arg.split(" ")
+        fun_name = argument[0]
+        object_id = self.get_id(argument[0])
+        data = []
+        found = False
+        count = 0
+
+        if len(arg) <= 1:
+            return (False, None, [], None, 0)
+        try:
+            with open(self.__file_path, "r") as f:
+                js_data = json.load(f)
+        except FileNotFoundError:
+            pass
+        else:
+            for key in js_data:
+                obj_name_f = key.split(".")[0]
+                object_id_f = key.split(".")[1]
+                if obj_name_f == cls_name:
+                    count += 1
+                    if object_id_f == object_id:
+                        new_obj = self.class_list[obj_name_f](**js_data[key])
+                        data.append(new_obj.__str__())
+                        return (True, object_id, data, fun_name, count)
+                    else:
+                        new_obj = self.class_list[cls_name](**js_data[key])
+                        data.append(new_obj.__str__())
+                        found = True
+            return (found, None, data, fun_name, count)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
