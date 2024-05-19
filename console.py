@@ -154,7 +154,6 @@ class HBNBCommand(cmd.Cmd):
                 json.dump(json_data, f)
             if not found:
                 print("** no instance found **")
-            json_data = {}  # insure that nothing left
 
     def do_all(self, arg):
         """print a list of all instance that exist in json file
@@ -250,7 +249,7 @@ class HBNBCommand(cmd.Cmd):
         if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_obj_info(arg, "User")
+        found, object_id, data, count = self.get_obj_info(arg, "User")
         if fun_name == ".count()":
             print(count)
         elif found and fun_name == ".all()":
@@ -280,7 +279,7 @@ class HBNBCommand(cmd.Cmd):
         if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_obj_info(arg, "BaseModel")
+        found, object_id, data, count = self.get_obj_info(arg, "BaseModel")
         if found and fun_name == ".all()":
             print(data)
         elif fun_name == ".count()":
@@ -310,7 +309,7 @@ class HBNBCommand(cmd.Cmd):
         if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_obj_info(arg, "State")
+        found, object_id, data, count = self.get_obj_info(arg, "State")
         if found and fun_name == ".all()":
             print(data)
         elif fun_name == ".count()":
@@ -340,7 +339,7 @@ class HBNBCommand(cmd.Cmd):
         if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_obj_info(arg, "Place")
+        found, object_id, data, count = self.get_obj_info(arg, "Place")
         if found and fun_name == ".all()":
             print(data)
         elif fun_name == ".count()":
@@ -370,7 +369,7 @@ class HBNBCommand(cmd.Cmd):
         if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_obj_info(arg, "City")
+        found, object_id, data, count = self.get_obj_info(arg, "City")
         if found and fun_name == ".all()":
             print(data)
         elif fun_name == ".count()":
@@ -400,7 +399,7 @@ class HBNBCommand(cmd.Cmd):
         if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, fun_name, count = self.get_obj_info(arg, "Review")
+        found, object_id, data, count = self.get_obj_info(arg, "Review")
         if found and fun_name == ".all()":
             print(data)
         elif fun_name == ".count()":
@@ -432,7 +431,7 @@ class HBNBCommand(cmd.Cmd):
         if f is False:
             print("** no instance found **")
             return
-        found, obj_id, data, fun_name, count = self.get_obj_info(arg, "Amenity")
+        found, obj_id, data, count = self.get_obj_info(arg, "Amenity")
 
         if found and fun_name == ".all()":
             print(data)
@@ -480,12 +479,12 @@ class HBNBCommand(cmd.Cmd):
                     if object_id_f == object_id:
                         new_obj = self.class_list[obj_name_f](**js_data[key])
                         data.append(new_obj.__str__())
-                        return (True, object_id, data, fun_name, count)
+                        return (True, object_id, data, count)
                     else:
                         new_obj = self.class_list[cls_name](**js_data[key])
                         data.append(new_obj.__str__())
                         found = True
-            return (found, None, data, fun_name, count)
+            return (found, None, data, count)
     
     def check_for_function(self, fun_name):
         pattern = r"\.show\(\)$|\.destroy\(\)$"
