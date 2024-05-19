@@ -54,10 +54,14 @@ import re
 
 # 77211966-b927-4265-aa71-38d31101fd37
 
-number
-= "3.5666"
+number = "3.5666"
+#fun = ".show()"
+fun = ".destroy(f)"
 
-if re.match(r"^(\d+(\.\d+)?)$", number):
+pattern = r"\.show\(\)$|\.destroy\(\)$"
+
+#if re.match(r"^(\d+(\.\d+)?)$", number):
+if re.match(pattern, fun):
     print("match")
 else:
     print("dosn'tmatch")

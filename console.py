@@ -236,6 +236,9 @@ class HBNBCommand(cmd.Cmd):
         """
         argument = arg.split(" ")
         fun_name = argument[0]
+        if (self.check_for_function(fun_name)):
+            print("** instance id missing **")
+            return
         f = False
         for fun in self.function_list:
             if re.match(fun, argument[0]):
@@ -263,6 +266,9 @@ class HBNBCommand(cmd.Cmd):
            object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
+        if (self.check_for_function(fun_name)):
+            print("** instance id missing **")
+            return
         f = False
         for fun in self.function_list:
             if re.match(fun, argument[0]):
@@ -290,6 +296,9 @@ class HBNBCommand(cmd.Cmd):
         object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
+        if (self.check_for_function(fun_name)):
+            print("** instance id missing **")
+            return
         f = False
         for fun in self.function_list:
             if re.match(fun, argument[0]):
@@ -317,11 +326,14 @@ class HBNBCommand(cmd.Cmd):
         Place object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
+        if (self.check_for_function(fun_name)):
+            print("** instance id missing **")
+            return
         f = False
         for fun in self.function_list:
             if re.match(fun, argument[0]):
                 f = True
-            if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
+            if len(fun) == len(fun_name) and fun != ".all()" and fun != ".count()":
                 f = False
 
         if f is False:
@@ -345,6 +357,9 @@ class HBNBCommand(cmd.Cmd):
         argument = arg.split(" ")
         fun_name = argument[0]
         f = False
+        if (self.check_for_function(fun_name)):
+            print("** instance id missing **")
+            return
         for fun in self.function_list:
             if re.match(fun, argument[0]):
                 f = True
@@ -371,6 +386,9 @@ class HBNBCommand(cmd.Cmd):
         Review object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
+        if (self.check_for_function(fun_name)):
+            print("** instance id missing **")
+            return
         f = False
         for fun in self.function_list:
             if re.match(fun, argument[0]):
@@ -398,6 +416,11 @@ class HBNBCommand(cmd.Cmd):
         object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
+
+        if (self.check_for_function(fun_name)):
+            print("** instance id missing **")
+            return
+        
         f = False
         for fun in self.function_list:
             if re.match(fun, fun_name):
@@ -462,7 +485,13 @@ class HBNBCommand(cmd.Cmd):
                         data.append(new_obj.__str__())
                         found = True
             return (found, None, data, fun_name, count)
-
+    
+    def check_for_function(self, fun_name):
+        pattern = r"\.show\(\)$|\.destroy\(\)$"
+        if re.match(pattern, fun_name):
+            return True
+        else:
+            return False
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

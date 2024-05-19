@@ -10,4 +10,5 @@ class Amenity(BaseModel):
     name = ""
 
     def __init__(self, *args, **kwargs):
+        """init method used to initialize instance attribute"""
         super().__init__(*args, **kwargs)
