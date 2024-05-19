@@ -259,7 +259,7 @@ class HBNBCommand(cmd.Cmd):
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"User {object_id}")
         else:
-            print(data)
+            print(data[0])
 
     def do_BaseModel(self, arg):
         """this method for reteiving all BaseModel
