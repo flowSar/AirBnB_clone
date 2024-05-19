@@ -516,17 +516,16 @@ class HBNBCommand(cmd.Cmd):
 
     def parse_and_update(self, arg, obj_name):
         args = arg.split(",")
-        #City.update("7edb3bb0-c48f-4d61-97bb-2eb050774d37", "salary", 2000)
-        #print(f"args: {args}")
-        #if len(args) <= 1 and check_for_function:
-            #print("** instance id missing **")
-            #return
-        #elif len(args) < 2 :
-            #print("** attribute name missing **")
-            #return
-        #elif len(args) < 3:
-            #print("** value missing **")
-            #return
+        
+        if args[0] == ".update()":
+            print("** instance id missing **")
+            return
+        elif len(args) < 2 :
+            print("** attribute name missing **")
+            return
+        elif len(args) < 3:
+            print("** value missing **")
+            return
         obj_id = args[0][9:-1].strip()
         attribute = args[1][2:-1].strip()
         value = args[2][:-1].strip()
