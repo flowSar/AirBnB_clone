@@ -20,4 +20,5 @@ class Place(BaseModel):
     amenity_ids = []
 
     def __init__(self, *args, **kwargs):
+        """init method used to initialize class attribute"""
         super().__init__(*args, **kwargs)

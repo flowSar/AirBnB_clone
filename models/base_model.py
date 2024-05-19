@@ -14,6 +14,7 @@ class BaseModel:
         and updated_at
     """
     def __init__(self, *args, **kwargs):
+        """init method used to initialize class attribute"""
         if (len(kwargs) != 0):
             for key in kwargs.keys():
                 if key == '__class__':
@@ -37,6 +38,9 @@ class BaseModel:
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
+        """update instace time and save instance to the json file
+            by using storage instance
+        """
         self.updated_at = datetime.today()
         storage.save()
 
