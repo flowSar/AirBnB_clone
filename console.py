@@ -101,7 +101,6 @@ class HBNBCommand(cmd.Cmd):
         """
         argument = arg.split(" ")
         giving_obj = argument[0]
-        giving_id = argument[1]
         found = False
         if (len(giving_obj) == 0):
             print("** class name missing **")
@@ -110,6 +109,7 @@ class HBNBCommand(cmd.Cmd):
         elif (len(argument) < 2):
             print("** instance id missing **")
         else:
+            giving_id = argument[1]
             with open(self.__file_path, "r") as f:
                 json_data = json.load(f)
             for obj in json_data:
@@ -131,7 +131,6 @@ class HBNBCommand(cmd.Cmd):
         """
         argument = arg.split(" ")
         giving_obj = argument[0]
-        giving_id = argument[1]
         found = False
         if (len(argument[0]) == 0):
             print("** class name missing **")
@@ -140,6 +139,7 @@ class HBNBCommand(cmd.Cmd):
         elif (len(argument) < 2):
             print("** instance id missing **")
         else:
+            giving_id = argument[1]
             with open(self.__file_path, "r") as f:
                 json_data = json.load(f)
             for key in json_data:
@@ -194,9 +194,6 @@ class HBNBCommand(cmd.Cmd):
         """
         argument = arg.split(" ")
         giving_obj = argument[0]
-        giving_id = argument[1]
-        attribute = argument[2]
-        value = argument[3]
         found = False
         if (len(argument[0]) == 0):
             print("** class name missing **")
@@ -209,6 +206,9 @@ class HBNBCommand(cmd.Cmd):
         elif (len(argument) < 4):
             print("** value missing **")
         else:
+            giving_id = argument[1]
+            attribute = argument[2]
+            value = argument[3]
             with open(self.__file_path, "r") as f:
                 json_data = json.load(f)
             for key in json_data:
