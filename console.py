@@ -283,7 +283,7 @@ class HBNBCommand(cmd.Cmd):
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"BaseModel {object_id}")
         else:
-            print(data)
+            print(data[0])
 
     def do_State(self, arg):
         """this method for reteiving all State
@@ -310,7 +310,7 @@ class HBNBCommand(cmd.Cmd):
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"State {object_id}")
         else:
-            print(data)
+            print(data[0])
 
     def do_Place(self, arg):
         """this method for reteiving all
@@ -337,7 +337,7 @@ class HBNBCommand(cmd.Cmd):
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"Place {object_id}")
         else:
-            print(data)
+            print(data[0])
 
     def do_City(self, arg):
         """this method for reteiving all
@@ -364,7 +364,7 @@ class HBNBCommand(cmd.Cmd):
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"City {object_id}")
         else:
-            print(data)
+            print(data[0])
 
     def do_Review(self, arg):
         """this method for reteiving all
@@ -391,7 +391,7 @@ class HBNBCommand(cmd.Cmd):
         elif found and object_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"Review {object_id}")
         else:
-            print(data)
+            print(data[0])
 
     def do_Amenity(self, arg):
         """this method for reteiving all Amenity
@@ -419,7 +419,7 @@ class HBNBCommand(cmd.Cmd):
         elif found and obj_id is not None and re.match(".destroy", fun_name):
             self.do_destroy(f"Amenity {obj_id}")
         else:
-            print(data)
+            print(data[0])
 
     def get_id(self, argument):
         arg = argument
