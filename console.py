@@ -181,7 +181,11 @@ class HBNBCommand(cmd.Cmd):
             else:
                 new_obj = self.class_list[obj](**json_data[key])
                 data.append(new_obj.__str__())
-        print(data)
+        
+        if len(data) > 0:
+            print(data)
+        else:
+            print("** no instance found **")
 
     def do_update(self, arg):
         """this method for updating BaseModel instance attributes
