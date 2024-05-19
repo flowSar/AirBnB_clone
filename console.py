@@ -449,10 +449,10 @@ class HBNBCommand(cmd.Cmd):
         object_id = None
         if ".show(" in arg:
             if arg[5:] != "()":
-                object_id = arg[6:-1]
+                object_id = arg[7:-2]
         elif ".destroy(" in arg:
             if arg[8:] != "()":
-                object_id = arg[9:-1]
+                object_id = arg[10:-2]
         return object_id
 
     def get_obj_info(self, arg, cls_name):
