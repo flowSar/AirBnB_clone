@@ -180,7 +180,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 new_obj = self.class_list[obj](**json_data[key])
                 data.append(new_obj.__str__())
-        
+
         if len(data) > 0:
             print(data)
         else:
@@ -232,6 +232,8 @@ class HBNBCommand(cmd.Cmd):
     def do_User(self, arg):
         """this method for reteiving all User
            object data from json file
+            Args:
+                arg: argument that was passed with update command
         """
         argument = arg.split(" ")
         fun_name = argument[0]
@@ -267,7 +269,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_BaseModel(self, arg):
         """this method for reteiving all BaseModel
-           object data from json file"""
+           object data from json file
+            Args:
+                arg: argument that was passed with update command
+           """
         argument = arg.split(" ")
         fun_name = argument[0]
         if re.search("update", arg):
@@ -280,8 +285,9 @@ class HBNBCommand(cmd.Cmd):
         for fun in self.function_list:
             if re.match(fun, argument[0]):
                 f = True
-            if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
-                f = False
+            if len(fun) == len(argument[0]):
+                if fun != ".all()" and fun != ".count()":
+                    f = False
 
         if f is False:
             print("** no instance found **")
@@ -293,14 +299,18 @@ class HBNBCommand(cmd.Cmd):
             print(count)
         elif not found or object_id is None:
             print("** no instance found **")
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"BaseModel {object_id}")
+        elif found and object_id is not None:
+            if re.match(".destroy", fun_name):
+                self.do_destroy(f"BaseModel {object_id}")
         else:
             print(data[0])
 
     def do_State(self, arg):
         """this method for reteiving all State
-        object data from json file"""
+        object data from json file
+            Args:
+                arg: argument that was passed with update command
+        """
         argument = arg.split(" ")
         fun_name = argument[0]
         if re.search("update", arg):
@@ -313,8 +323,9 @@ class HBNBCommand(cmd.Cmd):
         for fun in self.function_list:
             if re.match(fun, argument[0]):
                 f = True
-            if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
-                f = False
+            if len(fun) == len(argument[0]):
+                if fun != ".all()" and fun != ".count()":
+                    f = False
 
         if f is False:
             print("** no instance found **")
@@ -326,14 +337,18 @@ class HBNBCommand(cmd.Cmd):
             print(count)
         elif not found or object_id is None:
             print("** no instance found **")
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"State {object_id}")
+        elif found and object_id is not None:
+            if re.match(".destroy", fun_name):
+                self.do_destroy(f"State {object_id}")
         else:
             print(data[0])
 
     def do_Place(self, arg):
         """this method for reteiving all
-        Place object data from json file"""
+        Place object data from json file
+            Args:
+                arg: argument that was passed with update command
+        """
         argument = arg.split(" ")
         fun_name = argument[0]
         if re.search("update", arg):
@@ -346,8 +361,9 @@ class HBNBCommand(cmd.Cmd):
         for fun in self.function_list:
             if re.match(fun, argument[0]):
                 f = True
-            if len(fun) == len(fun_name) and fun != ".all()" and fun != ".count()":
-                f = False
+            if len(fun) == len(fun_name):
+                if fun != ".all()" and fun != ".count()":
+                    f = False
 
         if f is False:
             print("** no instance found **")
@@ -359,14 +375,18 @@ class HBNBCommand(cmd.Cmd):
             print(count)
         elif not found or object_id is None:
             print("** no instance found **")
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"Place {object_id}")
+        elif found and object_id is not None:
+            if re.match(".destroy", fun_name):
+                self.do_destroy(f"Place {object_id}")
         else:
             print(data[0])
 
     def do_City(self, arg):
         """this method for reteiving all
-        City object data from json file"""
+        City object data from json file
+            Args:
+                arg: argument that was passed with update command
+        """
         argument = arg.split(" ")
         fun_name = argument[0]
         if re.search("update", arg):
@@ -379,8 +399,9 @@ class HBNBCommand(cmd.Cmd):
         for fun in self.function_list:
             if re.match(fun, argument[0]):
                 f = True
-            if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
-                f = False
+            if len(fun) == len(argument[0]):
+                if fun != ".all()" and fun != ".count()":
+                    f = False
 
         if f is False:
             print("** no instance found **")
@@ -392,14 +413,18 @@ class HBNBCommand(cmd.Cmd):
             print(count)
         elif not found or object_id is None:
             print("** no instance found **")
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"City {object_id}")
+        elif found and object_id is not None:
+            if re.match(".destroy", fun_name):
+                self.do_destroy(f"City {object_id}")
         else:
             print(data[0])
 
     def do_Review(self, arg):
         """this method for reteiving all
-        Review object data from json file"""
+        Review object data from json file
+            Args:
+                arg: argument that was passed with update command
+        """
         argument = arg.split(" ")
         fun_name = argument[0]
         if re.search("update", arg):
@@ -412,8 +437,9 @@ class HBNBCommand(cmd.Cmd):
         for fun in self.function_list:
             if re.match(fun, argument[0]):
                 f = True
-            if len(fun) == len(argument[0]) and fun != ".all()" and fun != ".count()":
-                f = False
+            if len(fun) == len(argument[0]):
+                if fun != ".all()" and fun != ".count()":
+                    f = False
 
         if f is False:
             print("** no instance found **")
@@ -425,14 +451,18 @@ class HBNBCommand(cmd.Cmd):
             print(count)
         elif not found or object_id is None:
             print("** no instance found **")
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"Review {object_id}")
+        elif found and object_id is not None:
+            if re.match(".destroy", fun_name):
+                self.do_destroy(f"Review {object_id}")
         else:
             print(data[0])
 
     def do_Amenity(self, arg):
         """this method for reteiving all Amenity
-        object data from json file"""
+        object data from json file
+            Args:
+                arg: argument that was passed with update command
+        """
         argument = arg.split(" ")
         fun_name = argument[0]
         if re.search("update", arg):
@@ -441,13 +471,14 @@ class HBNBCommand(cmd.Cmd):
         if (self.check_for_function(fun_name)):
             print("** instance id missing **")
             return
-        
+
         f = False
         for fun in self.function_list:
             if re.match(fun, fun_name):
                 f = True
-            if len(fun) == len(fun_name) and fun != ".all()" and fun != ".count()":
-                f = False
+            if len(fun) == len(fun_name):
+                if fun != ".all()" and fun != ".count()":
+                    f = False
 
         if f is False:
             print("** no instance found **")
@@ -460,12 +491,19 @@ class HBNBCommand(cmd.Cmd):
             print(count)
         elif not found or object_id is None:
             print("** no instance found **")
-        elif found and obj_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"Amenity {obj_id}")
+        elif found and obj_id is not None:
+            if re.match(".destroy", fun_name):
+                self.do_destroy(f"Amenity {obj_id}")
         else:
             print(data[0])
 
     def get_id(self, argument):
+        """this method parse the command line and get the id
+            if he was giving and return it or return None
+            if he wasn't giving.
+            Args:
+                arg: argument that was passed with update command
+        """
         arg = argument
         object_id = None
         if ".show(" in arg:
@@ -477,6 +515,15 @@ class HBNBCommand(cmd.Cmd):
         return object_id
 
     def get_obj_info(self, arg, cls_name):
+        """
+            ths fnction work on getting all ifnfo about object
+            if he's exist on the file his id , number of this object
+            in the file , and return all data of this object
+            all this data we return it in tuple
+            args:
+                arg: command line
+                cls_name: class name that we are looking for in the file
+        """
         argument = arg.split(" ")
         fun_name = argument[0]
         object_id = self.get_id(argument[0])
@@ -506,8 +553,13 @@ class HBNBCommand(cmd.Cmd):
                         data.append(new_obj.__str__())
                         found = True
             return (found, None, data, count)
-    
+
     def check_for_function(self, fun_name):
+        """this method for checking if the function match a specific
+            name so we can know which action we will take
+            Args:
+                fun_name: function name
+        """
         pattern = r"\.show\(\)$|\.destroy\(\)$|.update()$"
         if re.match(pattern, fun_name):
             return True
@@ -515,12 +567,18 @@ class HBNBCommand(cmd.Cmd):
             return False
 
     def parse_and_update(self, arg, obj_name):
+        """this method woks on parse command line
+            for updating the object
+            Args :
+                arg: command line.
+                obj_name: object that we are working on.
+        """
         args = arg.split(",")
-        
+
         if args[0] == ".update()":
             print("** instance id missing **")
             return
-        elif len(args) < 2 :
+        elif len(args) < 2:
             print("** attribute name missing **")
             return
         elif len(args) < 3:
@@ -530,6 +588,7 @@ class HBNBCommand(cmd.Cmd):
         attribute = args[1][2:-1].strip()
         value = args[2][:-1].strip()
         self.do_update(f"{obj_name} {obj_id} {attribute} {value}")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
