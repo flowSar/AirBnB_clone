@@ -508,7 +508,7 @@ class HBNBCommand(cmd.Cmd):
             return (found, None, data, count)
     
     def check_for_function(self, fun_name):
-        pattern = r"\.show\(\)$|\.destroy\(\)$|\.update()$"
+        pattern = r"\.show\(\)$|\.destroy\(\)$|.update()$"
         if re.match(pattern, fun_name):
             return True
         else:
@@ -516,15 +516,17 @@ class HBNBCommand(cmd.Cmd):
 
     def parse_and_update(self, arg, obj_name):
         args = arg.split(",")
-        #if args[0] == ".update()":
+        #City.update("7edb3bb0-c48f-4d61-97bb-2eb050774d37", "salary", 2000)
+        #print(f"args: {args}")
+        #if len(args) <= 1 and check_for_function:
             #print("** instance id missing **")
             #return
-        if len(args) < 2 :
-            print("** attribute name missing **")
-            return
-        elif len(args) < 3:
-            print("** value missing **")
-            return
+        #elif len(args) < 2 :
+            #print("** attribute name missing **")
+            #return
+        #elif len(args) < 3:
+            #print("** value missing **")
+            #return
         obj_id = args[0][9:-1].strip()
         attribute = args[1][2:-1].strip()
         value = args[2][:-1].strip()
