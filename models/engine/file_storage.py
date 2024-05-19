@@ -44,6 +44,7 @@ class FileStorage:
             and its attributes to json file,
         """
         json_data = {}
+        self.reload()
         for key in self.__objects.keys():
             obj = self.__objects[key]
             json_data[f"{obj.__class__.__name__}.{obj.id}"] = obj.to_dict()
