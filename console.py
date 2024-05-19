@@ -516,10 +516,10 @@ class HBNBCommand(cmd.Cmd):
 
     def parse_and_update(self, arg, obj_name):
         args = arg.split(",")
-        if args[0] == ".update()":
-            print("** instance id missing **")
-            return
-        elif len(args) < 2 :
+        #if args[0] == ".update()":
+            #print("** instance id missing **")
+            #return
+        if len(args) < 2 :
             print("** attribute name missing **")
             return
         elif len(args) < 3:
