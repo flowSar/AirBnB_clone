@@ -216,7 +216,7 @@ class HBNBCommand(cmd.Cmd):
                 if giving_obj == obj_name:
                     if obj_id == giving_id:
                         found = True
-                        if (re.match(r"^(\d+(\.\d+)?)$", value)):
+                        if (re.match(r"^(\d+\.\d+)$", value)):
                             json_data[key][attribute] = float(value)
                         elif (value[0] == "\""):
                             json_data[key][attribute] = value[1:-1]
@@ -235,6 +235,9 @@ class HBNBCommand(cmd.Cmd):
         """
         argument = arg.split(" ")
         fun_name = argument[0]
+        if re.search("update", arg):
+            self.parse_and_update(arg, "User")
+            return
         if (self.check_for_function(fun_name)):
             print("** instance id missing **")
             return
@@ -249,15 +252,16 @@ class HBNBCommand(cmd.Cmd):
         if f is False:
             print("** no instance found **")
             return
-        found, object_id, data, count = self.get_obj_info(arg, "User")
+        found, obj_id, data, count = self.get_obj_info(arg, "User")
         if fun_name == ".count()":
             print(count)
         elif found and fun_name == ".all()":
             print(data)
-        elif not found or object_id is None:
+        elif not found or obj_id is None:
             print("** no instance found **")
-        elif found and object_id is not None and re.match(".destroy", fun_name):
-            self.do_destroy(f"User {object_id}")
+        elif found and obj_id is not None:
+            if re.match(".destroy", fun_name):
+                self.do_destroy(f"User {obj_id}")
         else:
             print(data[0])
 
@@ -266,6 +270,9 @@ class HBNBCommand(cmd.Cmd):
            object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
+        if re.search("update", arg):
+            self.parse_and_update(arg, "BaseModel")
+            return
         if (self.check_for_function(fun_name)):
             print("** instance id missing **")
             return
@@ -296,6 +303,9 @@ class HBNBCommand(cmd.Cmd):
         object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
+        if re.search("update", arg):
+            self.parse_and_update(arg, "State")
+            return
         if (self.check_for_function(fun_name)):
             print("** instance id missing **")
             return
@@ -326,6 +336,9 @@ class HBNBCommand(cmd.Cmd):
         Place object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
+        if re.search("update", arg):
+            self.parse_and_update(arg, "Place")
+            return
         if (self.check_for_function(fun_name)):
             print("** instance id missing **")
             return
@@ -356,6 +369,9 @@ class HBNBCommand(cmd.Cmd):
         City object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
+        if re.search("update", arg):
+            self.parse_and_update(arg, "City")
+            return
         f = False
         if (self.check_for_function(fun_name)):
             print("** instance id missing **")
@@ -386,6 +402,9 @@ class HBNBCommand(cmd.Cmd):
         Review object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
+        if re.search("update", arg):
+            self.parse_and_update(arg, "Review")
+            return
         if (self.check_for_function(fun_name)):
             print("** instance id missing **")
             return
@@ -416,7 +435,9 @@ class HBNBCommand(cmd.Cmd):
         object data from json file"""
         argument = arg.split(" ")
         fun_name = argument[0]
-
+        if re.search("update", arg):
+            self.parse_and_update(arg, "Amenity")
+            return
         if (self.check_for_function(fun_name)):
             print("** instance id missing **")
             return
@@ -492,6 +513,13 @@ class HBNBCommand(cmd.Cmd):
             return True
         else:
             return False
+
+    def parse_and_update(self, arg, obj_name):
+        args = arg.split(",")
+        obj_id = args[0][9:-1].strip()
+        attribute = args[1][2:-1].strip()
+        value = args[2][:-1].strip()
+        self.do_update(f"{obj_name} {obj_id} {attribute} {value}")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
