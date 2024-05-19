@@ -22,7 +22,7 @@ you can apply this on all other objects `State BaseModel City Review Place Ameni
 and there's another way you do all what we discuss before . </br>
 for printing : `User.show("<id>")` example of id `6af95bb6-0317-4df8-b0a9-c7f54afcb2aa` </br>
 for deleting : `User.destroy("<id>")` </br>
-for updating : `User.update("<id>", "attribute", "value(string or int or float)")` , you ca oly update one attribute at a time .</br>
+for updating : `User.update("<id>", "attribute", "value(string or int or float)")` , you can only update one attribute at a time .</br>
 for printing all objects : `User.all()`
 
 
