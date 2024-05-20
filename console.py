@@ -268,8 +268,6 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return
         found, obj_id, data, count = self.get_obj_info(arg, "User")
-        # User.show("8bab0b23-83b0-4cc2-82d9-4b1b479cd70c")
-
         if fun_name == ".count()":
             print(count)
         elif found and fun_name == ".all()":

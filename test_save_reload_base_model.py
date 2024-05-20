@@ -88,6 +88,7 @@ elif model_id in result and "id" in result:
 
 if not is_found:
     result = exec_command(my_console, "{}.show({})".format(model_class, model_id))
+    print(f"id looking for {model_id}")
     if result is None or result == "":
         pass  
     elif model_id in result and "id" in result:
