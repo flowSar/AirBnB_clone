@@ -110,8 +110,11 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             giving_id = argument[1]
-            with open(self.__file_path, "r") as f:
-                json_data = json.load(f)
+            try:
+                with open(self.__file_path, "r") as f:
+                    json_data = json.load(f)
+            except FileNotFoundError:
+                pass
             for obj in json_data:
                 obj_id = obj.split(".")[1]
                 obj_name = obj.split(".")[0]
@@ -140,8 +143,11 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             giving_id = argument[1]
-            with open(self.__file_path, "r") as f:
-                json_data = json.load(f)
+            try:
+                with open(self.__file_path, "r") as f:
+                    json_data = json.load(f)
+            except FileNotFoundError:
+                pass
             for key in json_data:
                 obj_id = key.split(".")[1]
                 obj_name = key.split(".")[0]
@@ -168,9 +174,11 @@ class HBNBCommand(cmd.Cmd):
             if (not self.is_class_exist(argument[0])):
                 print("** class doesn't exist **")
                 return
-
-        with open(self.__file_path, "r") as f:
-            json_data = json.load(f)
+        try:
+            with open(self.__file_path, "r") as f:
+                json_data = json.load(f)
+        except FileNotFoundError:
+            pass
         for key in json_data:
             obj = key.split(".")[0]
             if len(giving_obj) > 0:
@@ -208,8 +216,11 @@ class HBNBCommand(cmd.Cmd):
             giving_id = argument[1]
             attribute = argument[2]
             value = argument[3]
-            with open(self.__file_path, "r") as f:
-                json_data = json.load(f)
+            try:
+                with open(self.__file_path, "r") as f:
+                    json_data = json.load(f)
+            except FileNotFoundError:
+                pass
             for key in json_data:
                 obj_id = key.split(".")[1]
                 obj_name = key.split(".")[0]
