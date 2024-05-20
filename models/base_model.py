@@ -53,11 +53,8 @@ class BaseModel:
 
     def to_dict(self):
         """
-            to_dict return a dictionary that represention all object
-            attribute and name in type of dictionary. and update the
-            formate of time.
-            Return:
-                dictionay represent of object_attributes
+        A string representation of the instance of BaseModel.
+        :return: str
         """
         my_dict = self.__dict__.copy()
         MCS = 'microseconds'
