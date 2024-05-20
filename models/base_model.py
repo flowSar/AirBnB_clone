@@ -56,6 +56,5 @@ class BaseModel:
         my_dict['created_at'] = date_time_obj1
         date_time_obj2 = my_dict["updated_at"].isoformat(timespec=MCS)
         my_dict['updated_at'] = date_time_obj2
-        dict_class = {'__class__': self.__class__.__name__}
-        dict_class.update(my_dict)
-        return dict_class
+        my_dict['__class__'] = self.__class__.__name__
+        return my_dict
