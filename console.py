@@ -113,17 +113,18 @@ class HBNBCommand(cmd.Cmd):
             try:
                 with open(self.__file_path, "r") as f:
                     json_data = json.load(f)
+
+                for obj in json_data:
+                    obj_id = obj.split(".")[1]
+                    obj_name = obj.split(".")[0]
+                    if obj_name == giving_obj:
+                        if obj_id == giving_id:
+                            found = True
+                            object_n = self.class_list[giving_obj]
+                            new_obj = object_n(**json_data[obj])
+                            print(new_obj)
             except FileNotFoundError:
                 pass
-            for obj in json_data:
-                obj_id = obj.split(".")[1]
-                obj_name = obj.split(".")[0]
-                if obj_name == giving_obj:
-                    if obj_id == giving_id:
-                        found = True
-                        new_obj = self.class_list[giving_obj](**json_data[obj])
-                        print(new_obj)
-
             if not found:
                 print("** no instance found **")
 
@@ -146,18 +147,19 @@ class HBNBCommand(cmd.Cmd):
             try:
                 with open(self.__file_path, "r") as f:
                     json_data = json.load(f)
+
+                for key in json_data:
+                    obj_id = key.split(".")[1]
+                    obj_name = key.split(".")[0]
+                    if obj_name == giving_obj:
+                        if obj_id == giving_id:
+                            found = True
+                            json_data.pop(key)
+                            break
+                with open(self.__file_path, "w") as f:
+                    json.dump(json_data, f)
             except FileNotFoundError:
                 pass
-            for key in json_data:
-                obj_id = key.split(".")[1]
-                obj_name = key.split(".")[0]
-                if obj_name == giving_obj:
-                    if obj_id == giving_id:
-                        found = True
-                        json_data.pop(key)
-                        break
-            with open(self.__file_path, "w") as f:
-                json.dump(json_data, f)
             if not found:
                 print("** no instance found **")
 
@@ -177,18 +179,18 @@ class HBNBCommand(cmd.Cmd):
         try:
             with open(self.__file_path, "r") as f:
                 json_data = json.load(f)
-        except FileNotFoundError:
-            pass
-        for key in json_data:
-            obj = key.split(".")[0]
-            if len(giving_obj) > 0:
-                if giving_obj == obj:
+
+            for key in json_data:
+                obj = key.split(".")[0]
+                if len(giving_obj) > 0:
+                    if giving_obj == obj:
+                        new_obj = self.class_list[obj](**json_data[key])
+                        data.append(new_obj.__str__())
+                else:
                     new_obj = self.class_list[obj](**json_data[key])
                     data.append(new_obj.__str__())
-            else:
-                new_obj = self.class_list[obj](**json_data[key])
-                data.append(new_obj.__str__())
-
+        except FileNotFoundError:
+            pass
         if len(data) > 0:
             print(data)
         else:
@@ -219,22 +221,22 @@ class HBNBCommand(cmd.Cmd):
             try:
                 with open(self.__file_path, "r") as f:
                     json_data = json.load(f)
+
+                for key in json_data:
+                    obj_id = key.split(".")[1]
+                    obj_name = key.split(".")[0]
+                    if giving_obj == obj_name:
+                        if obj_id == giving_id:
+                            found = True
+                            if (re.match(r"^(\d+\.\d+)$", value)):
+                                json_data[key][attribute] = float(value)
+                            elif (value[0] == "\""):
+                                json_data[key][attribute] = value[1:-1]
+                            else:
+                                json_data[key][attribute] = int(value)
+                            break
             except FileNotFoundError:
                 pass
-            for key in json_data:
-                obj_id = key.split(".")[1]
-                obj_name = key.split(".")[0]
-                if giving_obj == obj_name:
-                    if obj_id == giving_id:
-                        found = True
-                        if (re.match(r"^(\d+\.\d+)$", value)):
-                            json_data[key][attribute] = float(value)
-                        elif (value[0] == "\""):
-                            json_data[key][attribute] = value[1:-1]
-                        else:
-                            json_data[key][attribute] = int(value)
-                        break
-
             if not found:
                 print("** no instance found **")
             with open(self.__file_path, "w") as f:
@@ -542,28 +544,29 @@ class HBNBCommand(cmd.Cmd):
         found = False
         count = 0
 
-        if len(arg) <= 1:
-            return (False, None, [], None, 0)
         try:
-            with open(self.__file_path, "r") as f:
-                js_data = json.load(f)
+            if len(arg) <= 1:
+                return (False, None, [], None, 0)
+            else:
+                with open(self.__file_path, "r") as f:
+                    js_data = json.load(f)
+                for key in js_data:
+                    obj_name_f = key.split(".")[0]
+                    object_id_f = key.split(".")[1]
+                    if obj_name_f == cls_name:
+                        count += 1
+                        if object_id_f == object_id:
+                            object_n = self.class_list[obj_name_f]
+                            new_obj = object_n(**js_data[key])
+                            data.append(new_obj.__str__())
+                            return (True, object_id, data, count)
+                        else:
+                            new_obj = self.class_list[cls_name](**js_data[key])
+                            data.append(new_obj.__str__())
+                            found = True
+                return (found, None, data, count)
         except FileNotFoundError:
-            pass
-        else:
-            for key in js_data:
-                obj_name_f = key.split(".")[0]
-                object_id_f = key.split(".")[1]
-                if obj_name_f == cls_name:
-                    count += 1
-                    if object_id_f == object_id:
-                        new_obj = self.class_list[obj_name_f](**js_data[key])
-                        data.append(new_obj.__str__())
-                        return (True, object_id, data, count)
-                    else:
-                        new_obj = self.class_list[cls_name](**js_data[key])
-                        data.append(new_obj.__str__())
-                        found = True
-            return (found, None, data, count)
+            return (False, None, [], 0)
 
     def check_for_function(self, fun_name):
         """this method for checking if the function match a specific
