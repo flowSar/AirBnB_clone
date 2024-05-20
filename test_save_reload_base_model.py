@@ -72,42 +72,40 @@ def exec_command(my_console, the_command, last_lines = 1):
 """
  Tests
 """
-model_class = "Amenity"
-result = exec_command(my_console, "create {}".format(model_class))
-if result is None or result == "":
-    print("FAIL: No ID retrieved")
-    
-model_id = result
+model_class = "City"
+model_id = "Nop"
+attribute_name = "attribute_name"
+attribute_value = "string_value"
 
-result = exec_command(my_console, "{}.show(\"{}\")".format(model_class, model_id))
-is_found = False
+result = exec_command(my_console, "{}.update(\"{}\", \"{}\", \"{}\")".format(model_class, model_id, attribute_name, attribute_value))
+is_error = False
 if result is None or result == "":
     pass  
-elif model_id in result and "id" in result:
-    is_found = True
+elif result == "** no instance found **":
+    is_error = True
 
-if not is_found:
-    result = exec_command(my_console, "{}.show({})".format(model_class, model_id))
+if not is_error:
+    result = exec_command(my_console, "{}.update({}, \"{}\", \"{}\")".format(model_class, model_id, attribute_name, attribute_value))
     if result is None or result == "":
         pass  
-    elif model_id in result and "id" in result:
-        is_found = True
+    elif result == "** no instance found **":
+        is_error = True
 
-if not is_found:
-    result = exec_command(my_console, "{}.show(\"{}.{}\")".format(model_class, model_class, model_id))
+if not is_error:
+    result = exec_command(my_console, "{}.update(\"{}.{}\", \"{}\", \"{}\")".format(model_class, model_class, model_id, attribute_name, attribute_value))
     if result is None or result == "":
         pass  
-    elif model_id in result and "id" in result:
-        is_found = True
+    elif result == "** no instance found **":
+        is_error = True
 
-if not is_found:
-    result = exec_command(my_console, "{}.show({}.{})".format(model_class, model_class, model_id))
+if not is_error:
+    result = exec_command(my_console, "{}.update({}.{}, \"{}\", \"{}\")".format(model_class, model_class, model_id, attribute_name, attribute_value))
     if result is None or result == "":
         pass  
-    elif model_id in result and "id" in result:
-        is_found = True
+    elif result == "** no instance found **":
+        is_error = True
 
-if not is_found:
+if not is_error:
     print("FAIL: not found")
     
 print("OK", end="")

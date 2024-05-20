@@ -235,12 +235,14 @@ class HBNBCommand(cmd.Cmd):
                             else:
                                 json_data[key][attribute] = int(value)
                             break
+                        
+                with open(self.__file_path, "w") as f:
+                    json.dump(json_data, f)
             except FileNotFoundError:
                 pass
             if not found:
                 print("** no instance found **")
-            with open(self.__file_path, "w") as f:
-                json.dump(json_data, f)
+
 
     def do_User(self, arg):
         """this method for reteiving all User
