@@ -4,11 +4,11 @@ from models.base_model import BaseModel
 
 
 class User(BaseModel):
-    """User Is class that user to create User object and he
+    """User Is subclass of BaseModel and he 
         iherent all his functionality from BaseModel
         and he has four public attribute
     """
-    email = ""
+    email = None
     password = ""
     first_name = ""
     last_name = ""
@@ -16,3 +16,4 @@ class User(BaseModel):
     def __init__(self, *args, **kwargs):
         """init method for initilizing class attribute"""
         super().__init__(*args, **kwargs)
+        User.email = ""
