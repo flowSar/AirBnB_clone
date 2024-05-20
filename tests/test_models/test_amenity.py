@@ -18,10 +18,10 @@ class TestBaseModel(unittest.TestCase):
         check if updated_at != created_at
         """
         amenity = Amenity()
-        amenity.name = "amenity"
+        amenity.name = ""
         amenity.save()
         self.assertNotEqual(amenity.created_at, amenity.updated_at)
-        self.assertEqual(amenity.name, "amenity")
+        self.assertEqual(amenity.name, "")
 
     def test_save(self):
         """this method for testing if the aboject that was create
