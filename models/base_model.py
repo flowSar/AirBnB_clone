@@ -5,7 +5,7 @@
     classes that will create .
 """
 import uuid
-from datetime import datetime, date
+from datetime import datetime
 from models import storage
 
 
@@ -37,9 +37,7 @@ class BaseModel:
             storage.new(self)
 
     def __str__(self):
-        """
-            __str__ is a magic method return a respresentation of an object
-            when the object is printed .
+        """__str__ is a magic method return a respresentation of an object
         """
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
@@ -53,8 +51,11 @@ class BaseModel:
 
     def to_dict(self):
         """
-        A string representation of the instance of BaseModel.
-        :return: str
+            to_dict return a dictionary that represention all object
+            attribute and name in type of dictionary. and update the
+            formate of time.
+            Return:
+                dictionay represent of object_attributes
         """
         my_dict = self.__dict__.copy()
         MCS = 'microseconds'
