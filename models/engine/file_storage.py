@@ -26,7 +26,7 @@ class FileStorage:
     def all(self):
         """
             all method return dictionay of all object we created
-            Return:
+            :Return
                 dictionay of objects
         """
         return self.__objects
@@ -52,7 +52,7 @@ class FileStorage:
             obj = self.__objects[key]
             json_data[f"{obj.__class__.__name__}.{obj.id}"] = obj.to_dict()
 
-        with open(self.__file_path, "w") as f:
+        with open(FileStorage.__file_path, "w") as f:
             json.dump(json_data, f)
         json_data = {}
 
