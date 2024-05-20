@@ -18,17 +18,6 @@ class TestBaseModel(unittest.TestCase):
         check if updated_at != created_at
         """
         place = Place()
-        place.city_id = ""
-        place.user_id = ""
-        place.name = ""
-        place.description = ""
-        place.number_rooms = 0
-        place.number_bathrooms = 0
-        place.max_guest = 0
-        place.price_by_night = 0
-        place.latitude = 0.0
-        place.longitude = 0.0
-        place.amenity_ids = []
         place.save()
         self.assertNotEqual(place.created_at, place.updated_at)
         self.assertEqual(place.city_id, '')

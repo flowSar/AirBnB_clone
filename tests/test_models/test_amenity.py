@@ -18,7 +18,6 @@ class TestBaseModel(unittest.TestCase):
         check if updated_at != created_at
         """
         amenity = Amenity()
-        amenity.name = ""
         amenity.save()
         self.assertNotEqual(amenity.created_at, amenity.updated_at)
         self.assertEqual(amenity.name, "")
