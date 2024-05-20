@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
     base_model is python module where we define a BaseModel class
+    and the class of this module will serve a base class of all
+    classes that will create .
 """
 import uuid
 from datetime import datetime, date
@@ -13,6 +15,7 @@ class BaseModel:
         in this case we initialize our object with id, create_at,
         and updated_at
     """
+
     def __init__(self, *args, **kwargs):
         """init method used to initialize class attribute"""
         if (len(kwargs) != 0):
@@ -34,7 +37,8 @@ class BaseModel:
             storage.new(self)
 
     def __str__(self):
-        """__str__ is a magic method return a respresentation of an object
+        """
+            __str__ is a magic method return a respresentation of an object
             when the object is printed .
         """
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
@@ -48,9 +52,10 @@ class BaseModel:
         storage.save()
 
     def to_dict(self):
-        """to_dict return a dictionary that represention all object
+        """
+            to_dict return a dictionary that represention all object
             attribute and name in type of dictionary. and update the
-            formate of time .
+            formate of time.
             Return:
                 dictionay represent of object_attributes
         """
@@ -61,4 +66,5 @@ class BaseModel:
         date_time_obj2 = my_dict["updated_at"].isoformat(timespec=MCS)
         my_dict['updated_at'] = date_time_obj2
         my_dict['__class__'] = self.__class__.__name__
+
         return my_dict
