@@ -34,8 +34,7 @@ class BaseModel:
             storage.new(self)
 
     def __str__(self):
-        """
-            __str__ method return a respresentation of an object
+        """__str__ method return a respresentation of an object
         """
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
@@ -48,8 +47,7 @@ class BaseModel:
         storage.save()
 
     def to_dict(self):
-        """
-            to_dict return a dictionary that represention all object
+        """to_dict return a dictionary that represention all object
             attribute and name
         """
         my_dict = self.__dict__.copy()
