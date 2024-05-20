@@ -51,7 +51,6 @@ class FileStorage:
 
         with open(self.__file_path, "w") as f:
             json.dump(json_data, f)
-        self.__objects = {}
         json_data = {}
 
     def reload(self):

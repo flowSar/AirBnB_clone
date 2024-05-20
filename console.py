@@ -604,5 +604,3 @@ class HBNBCommand(cmd.Cmd):
         attribute = args[1][2:-1].strip()
         value = args[2][:-1].strip()
         self.do_update(f"{obj_name} {obj_id} {attribute} {value}")
-
-

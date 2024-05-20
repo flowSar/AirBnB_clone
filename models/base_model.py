@@ -21,10 +21,10 @@ class BaseModel:
                     pass
                 elif key == 'created_at':
                     DateTimeCr = datetime.fromisoformat(kwargs['created_at'])
-                    self.__dict__[key] = DateTimeCr
+                    setattr(self, key, DateTimeCr)
                 elif key == 'updated_at':
                     DateTimeUp = datetime.fromisoformat(kwargs['updated_at'])
-                    self.__dict__[key] = DateTimeUp
+                    setattr(self, key, DateTimeUp)
                 else:
                     self.__dict__[key] = kwargs[key]
         else:
