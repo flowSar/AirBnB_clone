@@ -72,7 +72,7 @@ def exec_command(my_console, the_command, last_lines = 1):
 """
  Tests
 """
-model_class = "City"
+model_class = "Amenity"
 result = exec_command(my_console, "create {}".format(model_class))
 if result is None or result == "":
     print("FAIL: No ID retrieved")
@@ -88,7 +88,6 @@ elif model_id in result and "id" in result:
 
 if not is_found:
     result = exec_command(my_console, "{}.show({})".format(model_class, model_id))
-    print(f"id looking for {model_id}")
     if result is None or result == "":
         pass  
     elif model_id in result and "id" in result:
