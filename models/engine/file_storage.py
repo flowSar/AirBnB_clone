@@ -14,14 +14,14 @@ class FileStorage:
         object data to json file , and works by updating json file
         each time we created new object
     """
-    __file_path = None
+    __file_path = "file.json"
     __objects = {}
 
     def __init__(self):
         """this function used for initilize class attribute when object
             is created.
         """
-        self.__file_path = "file.json"
+        pass
 
     def all(self):
         """
