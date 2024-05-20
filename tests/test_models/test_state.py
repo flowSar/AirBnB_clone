@@ -20,6 +20,7 @@ class TestBaseModel(unittest.TestCase):
         state = State()
         state.save()
         self.assertNotEqual(state.created_at, state.updated_at)
+        self.assertEqual(state.name, "")
 
     def test_save(self):
         """this method for testing if the aboject that was create
