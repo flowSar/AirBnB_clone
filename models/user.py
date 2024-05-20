@@ -8,7 +8,7 @@ class User(BaseModel):
         iherent all his functionality from BaseModel
         and he has four public attribute
     """
-    email = None
+    email = ""
     password = ""
     first_name = ""
     last_name = ""
@@ -16,4 +16,3 @@ class User(BaseModel):
     def __init__(self, *args, **kwargs):
         """init method for initilizing class attribute"""
         super().__init__(*args, **kwargs)
-        User.email = ""
