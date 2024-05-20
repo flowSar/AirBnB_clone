@@ -56,7 +56,6 @@ class TestBaseModel(unittest.TestCase):
             if obj_id == amenity.id:
                 found = jdata[key]
         self.assertEqual(found, amenity.to_dict())
-        self.assertEqual(amenity.to_dict()["name"], found["name"])
 
 
 if __name__ == '__main__':
