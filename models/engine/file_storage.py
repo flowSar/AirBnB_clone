@@ -22,6 +22,16 @@ class FileStorage:
             is created.
         """
         FileStorage.__file_path = "file.json"
+    
+    @property
+    def file_path(self):
+        """getter method for file_path"""
+        return self.__file_path
+    
+    @file_path.setter
+    def file_path(self, path):
+        """setter methof for file_path"""
+        self.__file_path = path
 
     def all(self):
         """
