@@ -235,14 +235,13 @@ class HBNBCommand(cmd.Cmd):
                             else:
                                 json_data[key][attribute] = int(value)
                             break
-                        
+
                 with open(self.__file_path, "w") as f:
                     json.dump(json_data, f)
             except FileNotFoundError:
                 pass
             if not found:
                 print("** no instance found **")
-
 
     def do_User(self, arg):
         """this method for reteiving all User
@@ -590,6 +589,11 @@ class HBNBCommand(cmd.Cmd):
                 obj_name: object that we are working on.
         """
         args = arg.split(",")
+        pattern = r'\{[^}]*\}'
+
+        if re.search(pattern, arg):
+            self.hand_dictionay_case(arg, obj_name, args[0][9:-1].strip())
+            return
 
         if args[0] == ".update()":
             print("** instance id missing **")
@@ -601,6 +605,29 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
             return
         obj_id = args[0][9:-1].strip()
+        if isinstance(eval(args[1][:-1]), dict):
+            print("yes dictionay")
         attribute = args[1][2:-1].strip()
         value = args[2][:-1].strip()
         self.do_update(f"{obj_name} {obj_id} {attribute} {value}")
+
+    def hand_dictionay_case(self, arg, obj_name, obj_id):
+        """this handle case when we use update function with
+        dictionay of attributes and its values"""
+        found = 0
+        extracted_striny = ""
+        for c in arg:
+            if c == '{':
+                found += 1
+            if found == 1:
+                extracted_striny += c
+                if c == '}':
+                    break
+        attributes_value = extracted_striny[1:-1].split(", ")
+        for att_v in attributes_value:
+            data = att_v.split(": ")
+            self.do_update(f"{obj_name} {obj_id} {data[0][1:-1]} {data[1]}")
+
+
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()

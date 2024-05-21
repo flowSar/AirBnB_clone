@@ -1,21 +1,19 @@
 #!/usr/bin/python3
 import re
-class Animal:
-    """
-    this is Animal class
-    it continue all Animal functions
-    """
-    def __init__(self, name):
-        self.__name = name
-    
-    def get_name(self):
-        """this meyhod print the name if instance animal"""
-        print(f"you're name is {self.__name}")
 
+string = "yay {brahim sarouri} yoy"
 
-pattern = r"^(\d+\.\d+)$"
-
-if re.match(pattern, "6.5"):
-    print("match")
+pattern = r'\{[^}]*\}'
+extracted_striny = ""
+found = 0
+if re.search(pattern, string):
+    for c in string:
+        if c == '{':
+            found += 1
+        if found == 1:
+            extracted_striny += c
+            if c == '}':
+                break
 else:
     print("doesn't match")
+print(extracted_striny)
