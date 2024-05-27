@@ -18,7 +18,7 @@ button {
     border:none;
     border-radius: 4px;
     margin-right: 30px;
-    margin-left: 250px;
+    margin-left: 200px;
 }
 
 .locations {
@@ -28,7 +28,7 @@ button {
     display: flex;
     flex-direction: column;
     justify-content:center;
-    margin-left: 18px;
+    margin-left: 50px;
 }
 .amenities {
     width: 25%;
@@ -36,7 +36,7 @@ button {
     display: flex;
     flex-direction: column;
     justify-content:center;
-    margin-left: 18px;
+    margin-left: 50px;
 }
 h3, h4 {
     margin: 0;
